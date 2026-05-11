@@ -7,7 +7,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
 
-<!-- Firebase SDK -->
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
   import { getFirestore, collection, addDoc, getDocs, query, orderBy, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -199,108 +198,59 @@ section { padding: 6rem 6rem; }
 .partner-card .name { color: var(--gold-light); font-size: .88rem; font-weight: 500; }
 .partner-card .role { color: rgba(245,240,232,.5); font-size: .78rem; margin-top: .2rem; }
 
-/* ─── ESP TREE (BẢN SAO HOÀN HẢO TỪ ẢNH THỰC TẾ) ─── */
+/* ─── ESP TREE ─── */
 .esp-tree-wrap {
-  margin-top: 5rem;
-  padding: 5rem 3rem;
-  background: var(--white);
-  border-radius: 24px;
-  border: 1px solid rgba(13,51,32,.05);
-  text-align: center;
-  overflow: hidden; 
+  margin-top: 5rem; padding: 5rem 3rem; background: var(--white);
+  border-radius: 24px; border: 1px solid rgba(13,51,32,.05); text-align: center; overflow: hidden; 
 }
 .esp-tree-container {
-  position: relative;
-  width: 100%;
-  max-width: 1000px;
-  aspect-ratio: 1000 / 900; 
-  margin: 3rem auto 0 auto;
+  position: relative; width: 100%; max-width: 1000px;
+  aspect-ratio: 1000 / 900; margin: 3rem auto 0 auto;
 }
-
-/* Thân cây cắt CNC màu đen */
-.tree-svg-trunk {
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  z-index: 2; 
-}
-
-/* Các tán lá cắt viền đám mây (Scalloped Edges) */
+.tree-svg-trunk { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; }
 .leaf-cluster {
-  position: absolute;
-  width: 250px;
-  height: 130px;
-  transform: translate(-50%, -50%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 5;
-  filter: drop-shadow(0 15px 20px rgba(0,0,0,0.25)); /* Đổ bóng tạo khối 3D */
-  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: absolute; width: 250px; height: 130px; transform: translate(-50%, -50%);
+  display: flex; align-items: center; justify-content: center; z-index: 5;
+  filter: drop-shadow(0 15px 20px rgba(0,0,0,0.25)); transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   cursor: pointer;
 }
-.leaf-cluster:hover {
-  transform: translate(-50%, -50%) scale(1.05);
-  z-index: 10;
-}
-
-/* Ghép các khối tròn để tạo viền mây tự nhiên như ảnh */
-.leaf-cluster div {
-  background: inherit; /* Tự động nhận màu nền của thẻ cha */
-}
-.lc-base {
-  position: absolute;
-  width: 100%; height: 100%;
-  border-radius: 60px;
-  z-index: 1;
-}
-.lc-c1, .lc-c2, .lc-c3, .lc-c4, .lc-c5 {
-  position: absolute;
-  border-radius: 50%;
-  z-index: 1;
-}
+.leaf-cluster:hover { transform: translate(-50%, -50%) scale(1.05); z-index: 10; }
+.leaf-cluster div { background: inherit; }
+.lc-base { position: absolute; width: 100%; height: 100%; border-radius: 60px; z-index: 1; }
+.lc-c1, .lc-c2, .lc-c3, .lc-c4, .lc-c5 { position: absolute; border-radius: 50%; z-index: 1; }
 .lc-c1 { width: 110px; height: 110px; top: -35px; left: 20px; }
 .lc-c2 { width: 130px; height: 130px; top: -45px; right: 20px; }
 .lc-c3 { width: 90px; height: 90px; bottom: -20px; left: 30px; }
 .lc-c4 { width: 120px; height: 120px; bottom: -30px; right: 30px; }
-.lc-c5 { width: 80px; height: 80px; top: 10px; left: -20px; } /* Lồi ra cạnh trái */
-
-/* Chữ bên trong lá: Màu đen, to rõ như bảng hiệu thật */
-.lc-text {
-  position: relative;
-  z-index: 2;
-  color: #111;
-  font-family: var(--ff-sans);
-  font-weight: 700;
-  font-size: 1.15rem;
-  line-height: 1.3;
-  text-align: center;
-  padding: 0 1rem;
-}
-
-/* Tấm Khiên Trung Tâm (Thay cho logo HCMCOU) */
+.lc-c5 { width: 80px; height: 80px; top: 10px; left: -20px; } 
+.lc-text { position: relative; z-index: 2; color: #111; font-family: var(--ff-sans); font-weight: 700; font-size: 1.15rem; line-height: 1.3; text-align: center; padding: 0 1rem; }
 .shield-badge {
-  position: absolute;
-  top: 65%; left: 50%;
-  transform: translate(-50%, -50%);
-  background: #fdfbf7;
-  border: 4px solid #111;
-  border-radius: 10px 10px 45px 45px;
-  padding: 15px 25px;
-  text-align: center;
-  z-index: 10;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.35);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 5px;
+  position: absolute; top: 65%; left: 50%; transform: translate(-50%, -50%);
+  background: #fdfbf7; border: 4px solid #111; border-radius: 10px 10px 45px 45px;
+  padding: 15px 25px; text-align: center; z-index: 10; box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+  display: flex; flex-direction: column; align-items: center; gap: 5px;
 }
 .shield-icon { font-size: 1.8rem; color: #111; line-height: 1; }
 .shield-text { font-family: var(--ff-serif); font-size: 1.05rem; font-weight: 700; color: #111; line-height: 1.3; }
 
-/* ─── SURVEY FORM WRAPPER ─── */
-.survey-wrapper { width: 100%; max-width: 1100px; margin: 4rem auto; background: var(--white); border-radius: 24px; box-shadow: 0 15px 45px rgba(13, 51, 32, 0.08); overflow: hidden; border: 1px solid rgba(13, 51, 32, 0.05); }
-.survey-wrapper iframe { width: 100%; height: 1800px; border: none; display: block; }
+/* ─── CẬP NHẬT: SURVEY FORM WRAPPER (GIÃN KHUNG TỐI ĐA) ─── */
+.survey-wrapper { 
+    width: 100%; 
+    max-width: 1100px; 
+    margin: 4rem auto; 
+    background: var(--white); 
+    border-radius: 24px; 
+    box-shadow: 0 15px 45px rgba(13, 51, 32, 0.08); 
+    overflow: hidden; 
+    border: 1px solid rgba(13, 51, 32, 0.05); 
+}
+
+.survey-wrapper iframe { 
+    width: 100%; 
+    height: 7500px; /* TĂNG CHIỀU CAO ĐỂ NUỐT TRỌN 7159px CỦA FORM, XÓA THANH CUỘN BÊN TRONG */
+    border: none; 
+    display: block; 
+}
 
 /* ─── ACADEMICS (Học thuật) ─── */
 #academics { background: var(--cream); }
@@ -412,9 +362,11 @@ footer { background: var(--green-deep); padding: 3rem 6rem; display: flex; align
   .tab-panel.active { grid-template-columns: 1fr; gap: 2rem; }
   .courses-grid, .counseling-grid, .blog-grid, .contact-wrap, .resource-grid { grid-template-columns: 1fr; }
   .nav-links { display: none; }
-  .survey-wrapper iframe { height: 2500px; } 
+  
+  /* CẬP NHẬT CHIỀU CAO CHO MOBILE */
+  .survey-wrapper iframe { height: 7500px; } 
 
-  /* Responsive Cây ESP (Chuyển về dạng lưới dọc trên mobile cho dễ đọc) */
+  /* Responsive Cây ESP */
   .tree-svg-trunk, .shield-badge { display: none; }
   .esp-tree-container { display: flex; flex-direction: column; align-items: center; gap: 2rem; height: auto; aspect-ratio: auto; min-height: unset; padding-bottom: 2rem;}
   .leaf-cluster { position: relative; top: auto !important; left: auto !important; transform: none !important; width: 100%; max-width: 300px; }
@@ -426,7 +378,6 @@ footer { background: var(--green-deep); padding: 3rem 6rem; display: flex; align
 
 <div class="toast" id="toast"></div>
 
-<!-- HỘP THƯ ẨN DANH -->
 <div class="letter-backdrop" id="letter-modal" onclick="closeModal(event)">
   <div class="letter-modal">
     <button class="modal-close" onclick="document.getElementById('letter-modal').classList.remove('open')">✕</button>
@@ -442,7 +393,6 @@ footer { background: var(--green-deep); padding: 3rem 6rem; display: flex; align
   </div>
 </div>
 
-<!-- NAVBAR DỌC BÊN TRÁI -->
 <nav id="navbar">
   <a href="#whoami" class="nav-brand">
     Hoàng Anh Thư
@@ -457,7 +407,6 @@ footer { background: var(--green-deep); padding: 3rem 6rem; display: flex; align
   </ul>
 </nav>
 
-<!-- TRANG: TÔI LÀ AI -->
 <div id="page-whoami" class="page active">
 <section id="hero">
   <div class="hero-deco"></div>
@@ -552,7 +501,6 @@ footer { background: var(--green-deep); padding: 3rem 6rem; display: flex; align
     </div>
   </div>
 
-  <!-- CÂY TRI THỨC ESP (Bản Clone Siêu Chân Thực Từ Ảnh Mẫu) -->
   <div class="esp-tree-wrap reveal">
     <div class="section-eyebrow eyebrow-brown eyebrow-center" style="margin-bottom: 1rem;">
       <span class="eyebrow-center-line" style="margin-right: 0.6rem;"></span>
@@ -564,10 +512,7 @@ footer { background: var(--green-deep); padding: 3rem 6rem; display: flex; align
     
     <div class="esp-tree-container">
         
-        <!-- THÂN VÀ CÀNH SVG (Sử dụng đường cong hữu cơ & Text uốn lượn) -->
         <svg class="tree-svg-trunk" viewBox="0 0 1000 900" preserveAspectRatio="xMidYMid slice">
-            
-            <!-- Hình khối thân cây (Filled Path giống cắt khối CNC) -->
             <path fill="#111" d="
                M 400 900
                Q 450 800 450 700
@@ -591,8 +536,6 @@ footer { background: var(--green-deep); padding: 3rem 6rem; display: flex; align
                Q 540 800 600 900
                Z
             "/>
-
-            <!-- Các đường Path vô hình để chữ chạy dọc theo cành -->
             <defs>
                 <path id="txt-engaging" d="M 230 390 Q 340 430 465 415" />
                 <path id="txt-timing" d="M 270 650 Q 350 620 455 585" />
@@ -601,8 +544,6 @@ footer { background: var(--green-deep); padding: 3rem 6rem; display: flex; align
                 <path id="txt-experiential" d="M 525 250 Q 535 320 525 380" />
                 <path id="txt-linking" d="M 545 635 Q 600 680 670 715" />
             </defs>
-
-            <!-- Chữ (Trắng, in hoa, đậm) bám dính dọc theo Path nhánh cây -->
             <text fill="#ffffff" font-size="16" font-family="Arial, sans-serif" font-weight="bold" letter-spacing="2" dy="-6">
                 <textPath href="#txt-engaging" startOffset="50%" text-anchor="middle">ENGAGING</textPath>
             </text>
@@ -623,9 +564,6 @@ footer { background: var(--green-deep); padding: 3rem 6rem; display: flex; align
             </text>
         </svg>
 
-        <!-- CÁC TÁN LÁ CLOUD (SCALLOPED EDGES) -->
-        <!-- Màu xanh được trích xuất chân thực từ ảnh -->
-        
         <div class="leaf-cluster" style="top: 18%; left: 30%; background: #62C04B;">
            <div class="lc-base"></div><div class="lc-c1"></div><div class="lc-c2"></div><div class="lc-c3"></div><div class="lc-c4"></div><div class="lc-c5"></div>
            <span class="lc-text">Civil Engineering &<br>Construction</span>
@@ -656,7 +594,6 @@ footer { background: var(--green-deep); padding: 3rem 6rem; display: flex; align
            <span class="lc-text">Finance &<br>Banking</span>
         </div>
 
-        <!-- TẤM KHIÊN GỐC (Thay logo trường) -->
         <div class="shield-badge">
             <div class="shield-icon">📚</div>
             <div class="shield-text">Mastering English<br>Nurturing Souls</div>
@@ -666,29 +603,8 @@ footer { background: var(--green-deep); padding: 3rem 6rem; display: flex; align
   </div>
 </section>
 
-<!-- PHẦN NHÚNG GOOGLE FORM GIÃN KHUNG -->
-<section id="research-survey" style="background: var(--cream-dark);">
-  <div class="reveal">
-      <div class="section-eyebrow eyebrow-purple eyebrow-center" style="margin-bottom: 1rem;">
-          <span class="eyebrow-center-line" style="margin-right: 0.6rem;"></span>
-          Nghiên cứu học thuật
-          <span class="eyebrow-center-line" style="margin-left: 0.6rem;"></span>
-      </div>
-      <h2 class="section-title" style="text-align: center;">Khảo sát cảm xúc người học ESP</h2>
-      <p style="text-align: center; color: var(--text-muted); max-width: 800px; margin: 0 auto;">Cảm ơn bạn đã dành thời gian tham gia khảo sát. Vui lòng hoàn thành các mục bên dưới để phục vụ công tác nghiên cứu XAI.</p>
-      
-      <div class="survey-wrapper">
-          <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSegQM04c-FAjJZ7vQTWgV4azBNtQXdkTe4r_aTPHCVQeJHtXg/viewform?embedded=true" 
-                  frameborder="0" 
-                  marginheight="0" 
-                  marginwidth="0">Đang tải…</iframe>
-      </div>
-  </div>
-</section>
-
 </div>
 
-<!-- TRANG: HỌC THUẬT -->
 <div id="page-academics" class="page">
 <section id="academics">
   <div class="reveal">
@@ -715,7 +631,6 @@ footer { background: var(--green-deep); padding: 3rem 6rem; display: flex; align
     </div>
   </div>
 
-  <!-- Lịch Học -->
   <div class="calendar-wrap reveal">
     <div class="section-eyebrow eyebrow-brown">Lịch học</div>
     <h3 class="section-title">Các lớp học kỳ này</h3>
@@ -744,7 +659,6 @@ footer { background: var(--green-deep); padding: 3rem 6rem; display: flex; align
     </div>
   </div>
 
-  <!-- Thư viện tài nguyên -->
   <div class="resource-wrap reveal">
     <div class="section-eyebrow eyebrow-purple-light">Thư viện</div>
     <h3 class="section-title">Sách & Video tham khảo</h3>
@@ -784,9 +698,28 @@ footer { background: var(--green-deep); padding: 3rem 6rem; display: flex; align
     </div>
   </div>
 </section>
+
+<section id="research-survey" style="background: var(--cream-dark);">
+  <div class="reveal">
+      <div class="section-eyebrow eyebrow-purple eyebrow-center" style="margin-bottom: 1rem;">
+          <span class="eyebrow-center-line" style="margin-right: 0.6rem;"></span>
+          Nghiên cứu học thuật
+          <span class="eyebrow-center-line" style="margin-left: 0.6rem;"></span>
+      </div>
+      <h2 class="section-title" style="text-align: center;">Khảo sát cảm xúc người học ESP</h2>
+      <p style="text-align: center; color: var(--text-muted); max-width: 800px; margin: 0 auto;">Cảm ơn bạn đã dành thời gian tham gia khảo sát. Vui lòng hoàn thành các mục bên dưới để phục vụ công tác nghiên cứu XAI.</p>
+      
+      <div class="survey-wrapper">
+          <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSegQM04c-FAjJZ7vQTWgV4azBNtQXdkTe4r_aTPHCVQeJHtXg/viewform?embedded=true" 
+                  frameborder="0" 
+                  marginheight="0" 
+                  marginwidth="0">Đang tải…</iframe>
+      </div>
+  </div>
+</section>
+
 </div>
 
-<!-- TRANG: TÂM LÝ HỌC ĐƯỜNG -->
 <div id="page-counseling" class="page">
 <section id="counseling">
   <div class="reveal">
@@ -824,7 +757,6 @@ footer { background: var(--green-deep); padding: 3rem 6rem; display: flex; align
 </section>
 </div>
 
-<!-- TRANG: BLOG -->
 <div id="page-blog" class="page">
 <section id="blog">
   <div class="reveal">
@@ -859,7 +791,6 @@ footer { background: var(--green-deep); padding: 3rem 6rem; display: flex; align
 </section>
 </div>
 
-<!-- TRANG: LIÊN HỆ -->
 <div id="page-contact" class="page">
 <section id="contact">
   <div class="reveal">
@@ -924,7 +855,6 @@ footer { background: var(--green-deep); padding: 3rem 6rem; display: flex; align
 </section>
 </div>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-brand">
     Hoàng Anh Thư
